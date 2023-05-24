@@ -2,12 +2,16 @@
 (file_exists('conexao.php') ? require_once 'conexao.php' : '');
 session_start();
 $nivel = $_SESSION['nivel'];
-    $sql = "Select * from users";
-    $resultado = mysqli_query($con, $sql);
-    $linhas = mysqli_num_rows($resultado);
-    if ($linhas == 0){
-        $msg = "<p class='alert alert-warning'>Tabela Vazia, impossível listar os dados.</p>";
+
+if(isset($_GET['id'])){
+    $id = $_GET['id'];
+    $select = "Select * from users where id = {$id}";
+    $busca = mysqli_query($con,$select);
+    if ($busca){
+        $dados = mysqli_fetch_assoc($busca);
     }
+}
+
 
 ?>
 
@@ -74,31 +78,36 @@ $nivel = $_SESSION['nivel'];
             }
 
             ?>
-            <h1 class="text-center mb-4"><strong>LISTAGEM DE USUARIOS</strong></h1>
+            <h1 class="text-center mb-4"><strong>Exclusão de Usuários</strong></h1>
             <div class="container">
                 <div class="row">
                     <div class="container bg-">
                         <div class="row">
                             <div class="col-12">
-                                <table class="table table-responsive table-hover">
-                                    <thead>
-                                    <th>#</th>
-                                    <th>Nome</th>
-                                    <th>Senha</th>
-                                    <th colspan="2">Ação</th>
-                                    </thead>
-                                <?php
-                                foreach ($resultado as $linha){
-                                    echo "<tr><td>{$linha['id']}</td>
-                                              <td>{$linha['nome']}</td>
-                                              <td>{$linha['senha']}</td>
-                                              <td><a href='excluir.php?id=".$linha['id']."'>Excluir</a></td>
-                                              <td><a href='alterar.php?id=".$linha['id']."'>Alterar</a></td>
-                                              
-                                              </tr>";
-                                }
-                                ?>
-                                </table>
+                                <form method="post" class="form-control" action="exclui.php">
+                                    <div class="row mt-2">
+                                        <div class="col-sm-12 col-md-2">
+                                            <label for="nome">Nome Completo</label>
+                                        </div>
+                                        <div class="col-sm-12 col-md-10">
+                                            <input type="text" class="form-control" name="nome" id="nome" value="<?=$dados['nome']?>">
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-sm-12 col-md-2">
+                                            <label for="usuario">Login</label>
+                                        </div>
+                                        <div class="col-sm-12 col-md-10">
+                                            <input type="text" class="form-control" name="usuario" id="usuario" value="<?=$dados['usuario']?>">
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-sm-6 col-md-6 offset-6 offset-md-6">
+                                            <button type="submit" class="btn btn-outline-primary form-control" name="acao" id="acao">Excluir Usuário</button>
+                                            <?php $_SESSION['id']=$dados['id']; ?>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
