@@ -1,9 +1,9 @@
 <?php
 
     $servidor = "localhost";      //dados do servidor
-    $usuario = "root";    //informações suas
-    $senha = "";              //informações suas
-    $base = "fatec";       //informações suas
+    $usuario = "521684";    //informações suas
+    $senha = "123456";              //informações suas
+    $base = "521684";       //informações suas
 
     $con = mysqli_connect($servidor, $usuario, $senha, $base);
 

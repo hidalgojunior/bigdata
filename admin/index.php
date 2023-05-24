@@ -1,7 +1,7 @@
 <?php
 session_start();
 $nivel = $_SESSION['nivel'];
-echo $nivel;
+
 
 (file_exists('conexao.php') ? require_once 'conexao.php' : '');
 $sql = "select * from users";
